@@ -6,17 +6,59 @@ use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
 
     public function index(Request $request): Renderable
     {
-        $user = User::paginate(5);
-        return view('User.index', compact('user'));
+        // dd($request->all());
+        $user = User::query();
+
+        $fullNames = User::select( DB::raw("CONCAT(users.first_name,' ',users.last_name) as full_name"))
+        ->pluck('full_name');
+
+        // dd($request->input('fullNames'));
+
+        if (!is_null($request->input('fullNames'))) {
+            // dump('fullNames ' . $request->input('fullNames'));
+
+            $fullNames = $request->input('fullNames');
+
+            list($firstName, $lastName) = explode(' ', $fullNames);
+
+            $user = $user->where('first_name', $firstName)
+                         ->where('last_name', $lastName);
+        }
+
+
+        if (!is_null($request->get('username'))) {
+            // dump('username' . $request->input('username'));
+            $user = $user->where('username', $request->input('username'));
+        }
+
+        if (!is_null($request->get('email'))) {
+            // dump('email' . $request->input('email'));
+            $user = $user->where('email', $request->input('email'));
+        }
+
+        if (!is_null($request->get('is_active'))) {
+            // dump('isactive_' . $request->input('is_active'));
+            $user = $user->where('is_active', $request->input('is_active'));
+        }
+
+        if (!is_null($request->get('is_admin'))) {
+            // dump('isadmin' . $request->input('is_admin'));
+            $user = $user->where('is_admin', $request->input('is_admin'));
+        }
+
+        $user = $user->get();
+
+        return view('User.index', compact('user' ,  'fullNames'));
     }
 
-    public function create()
+    public function create() 
     {
 
         return view('User.create');

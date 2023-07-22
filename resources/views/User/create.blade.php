@@ -34,7 +34,7 @@
 
           <div class="form-floating mb-3">
             <label for="email">email</label>
-            <input type="text" @class(['form-control','is-invalid' => $errors->has('email')])id="email" name ="email"  placeholder="enter email " value={{ old('email') }}>
+            <input type="email" @class(['form-control','is-invalid' => $errors->has('email')])id="email" name ="email"  placeholder="enter email " value={{ old('email') }}>
             @error('email')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror

@@ -50,4 +50,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function scopeFilterByAttribute($query, $attributeValue)
+    {
+        return $query->where('is_active', $attributeValue);
+        return $query->where('is_admin', $attributeValue);
+
+    }
 }

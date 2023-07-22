@@ -76,6 +76,7 @@ class UserAuthController extends Controller
 
         function logout()
         {
+
             Auth::logout();
 
             return redirect()->route('view.login');

@@ -259,39 +259,68 @@
           </li>
 
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-user"></i>
+              <p>
+                Vendor
+                <i class="right fas fa-angle-left"></i>
+
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('vendors.index') }}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('vendors.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+
 
 
           {{-- ////////// --}}
 
           <li class="nav-header"> Content Mangment</li>
 
-                {{-- category --}}
-              {{-- <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fa-solid fa-bars-sort"></i>
-                  <p>
-                     Category
-                    <i class="right fas fa-angle-left"></i>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-box"></i>
+              <p>
+                Brand
+                <i class="right fas fa-angle-left"></i>
 
-                  </p>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('brands.index') }}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p>Index</p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                     <i class="fas fa-list-ul"></i>
-                      <p>Index</p>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="fas fa-plus"></i>
-                      <p>Create</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
- --}}
+
+              <li class="nav-item">
+                <a href="{{ route('brands.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+
 
 
           <li class="nav-header">Setting</li>

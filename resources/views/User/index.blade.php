@@ -12,6 +12,27 @@
 @section('content')
 
     <div class="container ">
+<div class="filter mb-5">
+    <form action="{{ route('users.index') }}" method="GET">
+        <select name="is_active" class="mr-3">
+            <option value="1">Active</option>
+            <option value="0">InActive</option>
+        </select>
+        <select name="is_admin" class="mr-3">
+            <option value="1">Admin</option>
+            <option value="0">User</option>
+        </select>
+
+        <input type="email"  class="mr-3" name="email" id="email" placeholder="email address">
+
+        <input type="text" class="mr-3" name="username"id="username" placeholder="username">
+
+        <input type="text" class="mr-3" name="fullNames" id="full_name" placeholder="full_name">
+
+
+        <button type="submit">Filter</button>
+    </form>
+</div>
 <div class="row">
 
 @foreach ($user as $users )
@@ -19,6 +40,7 @@
     <ul class="list-group mb-3">
       <li class="list-group-item active" aria-current="true">Id => {{ $users->id }}</li>
       <li class="list-group-item">User Name = >{{ $users->username }}</li>
+      {{-- <li class="list-group-item">User Name = >{{ $users->full_name}}</li> --}}
       <li class="list-group-item">Email = >{{ $users->email }}</li>
       <li class="list-group-item">First Name =>{{ $users->first_name }}</li>
       <li class="list-group-item">Last Name => {{ $users->last_name }}</li>

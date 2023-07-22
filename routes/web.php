@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::resource('/users', UserController::class);
+Route::resource('/vendors', VendorController::class);
+Route::resource('/brands', BrandController::class);
+
+
 
 Route::view('master','cms.master')->name('master');
 

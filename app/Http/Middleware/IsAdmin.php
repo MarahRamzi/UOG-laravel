@@ -15,7 +15,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->is_admin == 0) {
+        if ($request->is_admin == 0) {
             abort(403);
 
         }
