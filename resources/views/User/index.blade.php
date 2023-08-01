@@ -12,6 +12,11 @@
 @section('content')
 
     <div class="container ">
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+        @endif
 <div class="filter mb-5">
     <form action="{{ route('users.index') }}" method="GET">
         <select name="is_active" class="mr-3">

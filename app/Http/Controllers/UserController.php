@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -58,7 +59,7 @@ class UserController extends Controller
         return view('User.index', compact('user' ,  'fullNames'));
     }
 
-    public function create() 
+    public function create()
     {
 
         return view('User.create');
@@ -86,7 +87,7 @@ class UserController extends Controller
         $user = User::create($request->all()); //create=>new user() +save()
 
         //PRG
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success' , 'user created');
     }
 
     public function show()
@@ -101,9 +102,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id): RedirectResponse
+    public function update(UserRequest $request, $id): RedirectResponse
     {
-        // dd($request->all());
+
         $request->validate([
             'username' => 'required|string|min:4',
             'email' => 'required |email',
@@ -112,20 +113,21 @@ class UserController extends Controller
             'is_admin' => 'required|in:0,1',
             'is_active' => 'required|in:0,1',
             // 'password' => [
+            //     'required',
             //     'min:8',
-            //     'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
-            //     'confirmed'
+            //     'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
             // ],
         ]);
+        // dd($request->all());
         $request = $request->except(['password']);
         $user = User::find($id);
         $user->update($request);
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success' , 'user updated');
     }
 
     public function destroy($id)
     {
         User::destroy($id);
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('success' , 'user deleted');
     }
 }

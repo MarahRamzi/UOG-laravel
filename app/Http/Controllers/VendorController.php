@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VendorRequest;
 use App\Models\Vendor;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\View;
@@ -57,22 +58,13 @@ class VendorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request):RedirectResponse
+    public function store(VendorRequest $request):RedirectResponse
     {
-        $request->validate([
-            'email' => 'required |email',
-            'first_name' => 'min:3 | max:15',
-            'last_name' => 'min:3 | max:15',
-            'is_active' => 'required|in:0,1',
-             'phone'    => ['required','unique:vendors', 'regex:/^\+?[0-9]{8,}$/'],
-
-        ]);
-
-
-        $vendor= Vendor::create($request->all());
+        $vlaidaed = $request->validated();
+        $vendor= Vendor::create($vlaidaed);
 
         //PRG
-        return redirect()->route('vendors.index');
+        return redirect()->route('vendors.index')->with('success' , 'vendor created');
     }
 
     /**
@@ -95,20 +87,13 @@ class VendorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $id):RedirectResponse
+    public function update(VendorRequest $request,  $id):RedirectResponse
     {
-        $request->validate([
-            'email' => 'required |email',
-            'first_name' => 'min:3 | max:15',
-            'last_name' => 'min:3 | max:15',
-            'is_active' => 'required|in:0,1',
-             'phone'    => ['required' ,'regex:/^\+?[0-9]{8,}$/'],
-
-        ]);
 
             $vendor = Vendor::find($id);
-            $vendor->update($request->all());
-            return redirect()->route('vendors.index');
+            $validated =$request->validated();
+            $vendor->update($validated);
+            return redirect()->route('vendors.index')->with('success' , 'vendor updated');
 
     }
 
@@ -119,7 +104,7 @@ class VendorController extends Controller
     {
        Vendor::destroy($id);
 
-       return redirect()->route('vendors.index');
+       return redirect()->route('vendors.index')->with('success' , 'vendor deleted');
 
     }
 }

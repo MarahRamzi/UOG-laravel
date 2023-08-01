@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-floating mb-3">
-            <label for="is_active"> Phone </label>
+            <label for="phone"> Phone </label>
             <input type="text" @class(['form-control','is-invalid' => $errors->has('phone')]) id="phone" name ="phone"  placeholder="enter your phone " value={{ old('phone') }}>
             @error('phone')
             <div class="invalid-feedback">{{ $message }}</div>

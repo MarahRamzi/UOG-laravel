@@ -57,4 +57,8 @@ class User extends Authenticatable
         return $query->where('is_admin', $attributeValue);
 
     }
+
+    public function PurchaseOrders(){
+        return $this->hasMany(PurchaseOrder::class , 'user_id', 'id');
+    }
 }

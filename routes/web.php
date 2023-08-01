@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Models\Inventory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,11 +26,16 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::resources([
+    'users' => UserController::class,
+    'vendors' => VendorController::class,
+    'brands' => BrandController::class,
+    'items' => ItemController::class,
+    'countries' => CountryController::class,
+    'cities' => CityController::class,
+    'inventories' =>InventoryController::class,
 
-Route::resource('/users', UserController::class);
-Route::resource('/vendors', VendorController::class);
-Route::resource('/brands', BrandController::class);
-
+]);
 
 
 Route::view('master','cms.master')->name('master');
@@ -36,11 +46,13 @@ Route::view('master','cms.master')->name('master');
 Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
 
 
-Route::get('/register', [UserAuthController::class, 'register'])->name('register');
+Route::get('/register', [UserAuthController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [UserAuthController::class, 'registerPost'])->name('register');
 
 
-Route::get('/login', [UserAuthController::class, 'showLogin'])->name('login');
+Route::get('/login', [UserAuthController::class, 'showLogin'])->name('login')->middleware('guest');
 Route::post('/login', [UserAuthController::class, 'login'])
 ->name('view.login')
 ->middleware('is_admin');
+
+Route::get('/items/filter', [ItemController::class, 'filterItems']);

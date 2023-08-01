@@ -316,9 +316,120 @@
                   <p>Create</p>
                 </a>
               </li>
+            </ul>
+              {{-- item --}}
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-box"></i>
+                  <p>
+                    Item
+                    <i class="right fas fa-angle-left"></i>
+
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('items.index') }}" class="nav-link">
+                      <i class="fas fa-list-ul"></i>
+                      <p>Index</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="{{ route('items.create') }}" class="nav-link">
+                      <i class="fas fa-plus"></i>
+                      <p>Create</p>
+                    </a>
+                  </li>
 
             </ul>
           </li>
+
+          {{-- inventory --}}
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-box"></i>
+              <p>
+                Inventory
+                <i class="right fas fa-angle-left"></i>
+
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('inventories.index') }}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('inventories.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+
+        </ul>
+      </li>
+
+          {{-- country --}}
+          {{-- <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-box"></i>
+              <p>
+                Country
+                <i class="right fas fa-angle-left"></i>
+
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('countries.index') }}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('countries.create') }}" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+
+        </ul>
+      </li> --}}
+
+      {{-- city --}}
+
+      {{-- <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="fa fa-box"></i>
+          <p>
+            City
+            <i class="right fas fa-angle-left"></i>
+
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{ route('cities.index') }}" class="nav-link">
+              <i class="fas fa-list-ul"></i>
+              <p>Index</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('cities.create') }}" class="nav-link">
+              <i class="fas fa-plus"></i>
+              <p>Create</p>
+            </a>
+          </li>
+
+    </ul>
+  </li> --}}
 
 
 

@@ -12,6 +12,11 @@
 @section('content')
 
     <div class="container ">
+        @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
 <div class="filter mb-5">
     <form action="{{ route('brands.index') }}" method="GET" >
 

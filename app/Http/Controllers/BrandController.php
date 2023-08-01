@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BrandRequest;
 use App\Models\Brand;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -37,17 +38,13 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|min:4|unique:brands',
-            'note' => ' min:20 | max:300',
-            'icon' => 'required|string'
-        ]);
+
 
         $brand = Brand::create($request->all());
 
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->with('success' , 'brand created');
 
 
     }
@@ -74,17 +71,13 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BrandRequest $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|string|min:4',
-            'note' => 'min:20 | max:300',
-            'icon' => 'required|string'
-        ]);
+
 //    dd($request->all());
         $brand = Brand::find($id);
         $brand->update($request->all());
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->with('success' , 'brand updated');
     }
 
     /**
@@ -93,6 +86,6 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         Brand::destroy($id);
-        return redirect(route('brands.index'));
+        return redirect(route('brands.index'))->with('success' , 'brand deleted');
     }
 }
