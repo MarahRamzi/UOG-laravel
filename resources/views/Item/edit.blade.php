@@ -40,6 +40,27 @@
             @enderror
         </div>
 
+        <div class="form-floating mb-3 mt-3">
+            <label for="price">Item Price</label>
+            <input type="text" @class(['form-control','is-invalid' => $errors->has('price')]) id="price" name = "price"  placeholder="enter item price"  value={{ old('price' , $item->price) }}>
+            @error('price')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+
+        <div  @class(['form-control','mt-4','is-invalid' => $errors->has('purchasing_allowed')]) >
+            <label for="purchasing_allowed"> purchasing Allowed </label>
+            <select class="form-select" aria-label="Default select example" name="purchasing_allowed" id="purchasing_allowed">
+              <option selected disabled>Determine Purchasing Allowed</option>
+              <option value="1" {{ $item->purchasing_allowed ? 'selected="selected"' : '' }}>Allowed</option>
+              <option value="0" {{ !$item->purchasing_allowed ? 'selected="selected"' : '' }}>Not Allowed</option>
+            </select>
+            @error('purchasing_allowed')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
         <div class="form-group col-md-3">
             <label>Brand id</label>
             <select  @class(['form-control','is-invalid' => $errors->has('brand_id')]) name="brand_id" id="brand_id"  style="width: 100%;"   value={{ old('brand_id' , $item->brand_id) }}>

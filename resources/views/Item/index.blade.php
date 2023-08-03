@@ -13,6 +13,12 @@
 
     <div class="container ">
 
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+
         @if (session()->has('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}
@@ -26,7 +32,7 @@
         </select>
 
         <input type="text" class="mr-3" name="name"id="name" placeholder="name">
-{{-- 
+{{--
         <select name="vendor_id" class="mr-3">
             @foreach ($vendor as $vendors )
             <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
@@ -54,9 +60,11 @@
                 <img src="{{asset('storage/covers/' . $items->image) }}" class="card-img-top" alt="">
       </li>
             <li class="list-group-item">Item Name = >{{ $items->name }}</li>
-            <li class="list-group-item">UStatus => {{ $items->is_active }}</li>
+            <li class="list-group-item">Status => {{ $items->is_active }}</li>
+            <li class="list-group-item"> Price => {{ $items->price }}</li>
+            <li class="list-group-item"> purchasing Allowed => {{ $items->purchasing_allowed}}</li>
             <li class="list-group-item">Brand => {{ $items->brand->name }}</li>
-
+            <li class="list-group-item btn-holder"><a href="{{ route('add.to.cart', $items->id) }}" class="btn btn-warning">Add to cart</a> </li>
             <li class="list-group-item"><a href= "{{ route('items.edit' , $items->id) }}" class="btn btn-primary">Edit</a>
               <form action="{{ route('items.destroy' , $items->id) }}" method="post">
                   @csrf()

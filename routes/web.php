@@ -9,6 +9,7 @@ use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Models\Inventory;
+use App\Models\Item;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,3 +57,8 @@ Route::post('/login', [UserAuthController::class, 'login'])
 ->middleware('is_admin');
 
 Route::get('/items/filter', [ItemController::class, 'filterItems']);
+
+Route::get('cart', [ItemController::class, 'cart'])->name('cart');
+Route::get('add-to-cart/{id}', [ItemController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [ItemController::class, 'updateCart'])->name('update.cart');
+Route::delete('remove-from-cart', [ItemController::class, 'remove'])->name('remove.from.cart');

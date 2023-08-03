@@ -59,6 +59,7 @@ class ItemController extends Controller
     public function store(ItemRequest $request, Brand $brand)
     {
 
+
         if ($request->hasFile('image')) {
             $file = $request->file('image'); //uplodedFile object
             $imageName = time() . '-' . $file->getClientOriginalName();
@@ -67,14 +68,82 @@ class ItemController extends Controller
             $request = collect($request)->merge([
                 'image' => $imageName
             ]);
-
         }
 
-        // dd($imageName);
+        dd($request->all());
+
 
         $item = Item::create($request->all());
         return redirect(route('items.index'))
             ->with('success', 'item created');
+    }
+
+    public function cart()
+    {
+        return view('cart');
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function addToCart($id)
+    {
+        $item = Item::findOrFail($id);
+
+        $cart = session()->get('cart', []);
+
+        if (!$item->purchasing_allowed) {
+            return redirect()->back()->with('error', 'This item is not available for purchase.');
+        }
+
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                "name" => $item->name,
+                "quantity" => 1,
+                "price" => $item->price,
+                "image" => $item->image,
+                "time"  => now(),
+            ];
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->route('cart')->with('success', 'item added to cart successfully!');
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function updateCart(Request $request)
+    {
+        if($request->id && $request->quantity){
+            $cart = session()->get('cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            session()->put('cart', $cart);
+            session()->flash('success', 'Cart updated successfully');
+        }
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function remove(Request $request)
+    {
+        if($request->id) {
+            $cart = session()->get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+            session()->flash('success', 'item removed successfully');
+        }
     }
 
 
@@ -145,6 +214,7 @@ class ItemController extends Controller
     ->get();
 
     $vendors = Vendor::all();
+
 
     return view('Item.index', ['items' => $items, 'vendors' => $vendors]);
 }

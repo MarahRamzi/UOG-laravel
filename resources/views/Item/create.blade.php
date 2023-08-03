@@ -38,6 +38,20 @@
             @enderror
         </div>
 
+        <div class="form-floating mb-3 mt-3">
+            <label for="price">Item Price</label>
+            <input type="text" @class(['form-control','is-invalid' => $errors->has('price')]) id="price" name = "price"  placeholder="enter item price"  value={{ old('price') }}>
+            @error('price')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+
+        <div class="form-floating mb-3 mt-3">
+            <label for="purchasing_allowed">purchasing Allowed</label>
+            <input type="checkbox" class='checkbox'name="purchasing_allowed" id="purchasing_allowed" value="{{ old('purchasing_allowed') }}" >
+        </div>
+
         <div class="form-group col-md-12">
             <label>Brand id</label>
             <select  @class(['form-control','is-invalid' => $errors->has('brand_id')]) name="brand_id" id="brand_id"  style="width: 100%;">

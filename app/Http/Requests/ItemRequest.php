@@ -22,10 +22,12 @@ class ItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:4',
+            'name' => 'required|string|min:3',
             'image' => 'image|mimes:jpeg,png,jpg',
             'is_active' => 'required|in:0,1',
+            'price' => 'required',
+            // 'purchasing_allowed' => 'required',
         ];
-;
+
     }
 }
