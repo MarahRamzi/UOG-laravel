@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('vendor_items', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('item_id')
             ->constrained()
             ->cascadeOnDelete();
@@ -20,7 +19,8 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnDelete();
             $table->integer('quantity');
-            $table->timestamps();
+            $table->primary(['item_id' , 'vendor_id']);
+            $table->timestamp('created_at');
         });
     }
 

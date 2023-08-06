@@ -26,5 +26,11 @@ class PurchaseOrder extends Model
         return $this->belongsTo(Inventory::class , 'inventory_id' , 'id');
     }
 
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class ,'order_id' , 'id');
+
+   }
+
 
 }

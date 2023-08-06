@@ -22,11 +22,15 @@ class Vendor extends Model
         'password',
         'remember_token',
     ];
-    
+
         public function items()
         {
-            return $this->belongsToMany(Item::class, 'vendor_items', 'vendor_id', 'item_id')
-                            ->withPivot('quantity');
+            return $this->belongsToMany(Item::class,
+            'vendor_items',
+            'vendor_id',
+             'item_id',
+             'id', 'id' )
+             ->withPivot('quantity');
         }
 
 }

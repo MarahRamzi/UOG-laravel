@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->tinyInteger('is_active')->default(1);
             $table->string('phone');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,5 +29,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('vendors');
+        schema::dropSoftDelete();
     }
 };

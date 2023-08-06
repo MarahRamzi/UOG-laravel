@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemRequest;
 use App\Models\Brand;
+use App\Models\CartItem;
+use App\Models\Inventory;
 use App\Models\Item;
+use App\Models\PurchaseOrder;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,22 +17,35 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request , Item $item)
     {
-        $item = Item::query();
+        // $item = Item::all();
         $brand = Brand::all();
-        $vendor = Vendor::all();
+        $inventories = $item->inventories()->get();
+        $vendors = $item->vendors()->get();
 
+    //  dd($inventories);
 
         if (!is_null($request->get('name'))) {
             $item = $item->where('name', $request->input('name'));
         }
 
+        //  if (!is_null($inventories->pivot->quantity)) {
+        //     $item = $item->wherepivot('quantity','>=' , '50');
+        // }
+
         if (!is_null($request->get('brand_id'))) {
             $item = $item->where('brand_id', $request->input( 'brand_id' ));
         }
         // dd($request->all());
-        // $vendorName = $request->input($vendor->name);
+
+        if (!is_null($request->get('vendor_id'))) {
+            $item = $item->where('vendor_id', $request->input( 'vendor_id' ));
+        }
+
+        if (!is_null($request->get('inventory_id'))) {
+            $item = $item->where('inventory_id', $request->input( 'inventory_id' ));
+        }
 
 
         if (!is_null($request->get('is_active'))) {
@@ -37,10 +53,10 @@ class ItemController extends Controller
         }
 
         $item = $item->get();
-        // $items = $query->get();
+        // dd($item);
 
 
-        return view('Item.index', compact('item' , 'brand'  , 'vendor'));
+        return view('Item.index', compact('item' , 'brand' , 'inventories' ,'vendors' ));
     }
 
     /**
@@ -70,7 +86,7 @@ class ItemController extends Controller
             ]);
         }
 
-        dd($request->all());
+        // dd($request->all());
 
 
         $item = Item::create($request->all());
@@ -88,31 +104,85 @@ class ItemController extends Controller
      *
      * @return response()
      */
-    public function addToCart($id)
-    {
+    public function addToCart(Request $request , $id ){
+        // $data = $request->validate([
+        //     'user_id' => 'required',
+        //     'item_name' => 'required',
+        //     'quantity' => 'required|integer|min:1',
+        // ]);
         $item = Item::findOrFail($id);
 
-        $cart = session()->get('cart', []);
+    $cart = session()->get('cart', []);
+
+    $cartItemId = 'item_' . $item->id;
+
+    if (isset($cart[$cartItemId])) {
+        $cart[$cartItemId]['quantity'] += 1;
+    } else {
+        $cart[$cartItemId] = [
+            'item_name' => $item->name,
+            'price' => $item->price,
+            'quantity' => 1,
+            // 'status' => $item->status, // Add the status of the item
+        ];
+    }
+
+    // Store the updated cart data in the session
+    session()->put('cart', $cart);
+
+        $inventoriesWithItems = Inventory::with('items')->get();
+
+
+        foreach ($inventoriesWithItems as $inventory) {
+            $items = $inventory->items;
+
+        }
+
+
+        $item_name = $item->name;
+        $inventory_id = $inventory->id;
+        $quantity = '1';
 
         if (!$item->purchasing_allowed) {
             return redirect()->back()->with('error', 'This item is not available for purchase.');
         }
 
-        if(isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "name" => $item->name,
-                "quantity" => 1,
-                "price" => $item->price,
-                "image" => $item->image,
-                "time"  => now(),
-            ];
+
+
+        // Check if there is an existing "inprogress" purchase order for the user
+        $order = PurchaseOrder::where('status', 'inprogress')->first();
+
+        if (!$order) {
+            // If no existing order, create a new one
+            $order = PurchaseOrder::create([
+                'item_id' => $item->id,
+                'inventory_id' => $inventory_id,
+                'status' => '1',
+            ]);
         }
 
-        session()->put('cart', $cart);
-        return redirect()->route('cart')->with('success', 'item added to cart successfully!');
+        // if( $order->status == '1'){
+        //     $order->status = 'inprogress';
+        //    }else{
+        //     $order->status = 'dilevered';
+        //    }
+
+        // Associate the cart item with the purchase order
+        $cart_item = CartItem::create([
+            'order_id' => $order->id,
+            'item_id' => $item->id,
+            'inventory_id' => $inventory_id,
+            'item_name' => $item_name,
+            'quantity' => $quantity,
+        ]);
+
+        // Update the "inprogress" status of the purchase order
+        $order->status = '1';
+        $order->save();
+
+        return redirect()->route('cart')->with('success', 'Item added to cart successfully!');
     }
+
 
     /**
      * Write code on Method
@@ -127,6 +197,7 @@ class ItemController extends Controller
             session()->put('cart', $cart);
             session()->flash('success', 'Cart updated successfully');
         }
+
     }
 
     /**
@@ -217,5 +288,12 @@ class ItemController extends Controller
 
 
     return view('Item.index', ['items' => $items, 'vendors' => $vendors]);
+}
+
+public function Largestquantity(Item $item)
+{
+    $largeInventory = $item->inventories()->first();
+
+    return view('Item.largeQuantity' , compact('item' ,'largeInventory'));
 }
 }

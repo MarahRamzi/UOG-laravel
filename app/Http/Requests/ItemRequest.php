@@ -26,7 +26,7 @@ class ItemRequest extends FormRequest
             'image' => 'image|mimes:jpeg,png,jpg',
             'is_active' => 'required|in:0,1',
             'price' => 'required',
-            // 'purchasing_allowed' => 'required',
+            'purchasing_allowed' => 'nullable|required|boolean',
         ];
 
     }

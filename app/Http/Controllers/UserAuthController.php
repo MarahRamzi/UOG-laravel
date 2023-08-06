@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserLoggedIn;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,11 +66,19 @@ class UserAuthController extends Controller
             'password' => $request->password,
         ];
 
-        if (Auth::attempt($credentials)) {
-            return redirect('/master')->with('success', 'Login Success');
-        }
+        $result = Auth::attempt($credentials , $request->boolean('remember'));
 
-        return back()->with('error', 'Error Email or Password');
+        if($result){
+
+            event(new UserLoggedIn(auth()->user()));
+            // dd(auth()->user());
+              return redirect()->intended('/master');
+        }
+        return back()->withInput()->withErrors([
+             'email' => 'invalid email' ,
+             'password' => 'invalid password'  ,
+         ]);
+
     }
 
 

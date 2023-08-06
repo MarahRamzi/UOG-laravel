@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('is_admin')->only('create');
+    // }
 
     public function index(Request $request): Renderable
     {

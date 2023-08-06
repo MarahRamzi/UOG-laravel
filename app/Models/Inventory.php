@@ -19,8 +19,12 @@ class Inventory extends Model
 
     public function items()
     {
-        return $this->belongsToMany(Item::class, 'inventory_items', 'inventory_id', 'item_id')
-                    ->withPivot('quantity');
+        return $this->belongsToMany(Item::class,
+         'inventory_items',
+          'inventory_id',
+          'item_id',
+          'id' , 'id')
+           ->withPivot('quantity');
     }
 
     public function PurchaseOrders(){

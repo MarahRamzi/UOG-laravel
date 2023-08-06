@@ -10,7 +10,8 @@ class Item extends Model
 {
     use HasFactory , SoftDeletes;
 
-    protected $fillable =[ 'name' , 'image' , 'is_active' ,'price', 'purchasing_allowed', 'brand_id'] ;
+    protected $fillable =[ 'name' , 'image' , 'is_active' ,'price', 'purchasing_allowed', 'brand_id' , 'total_purchases' , 'total_sales
+    '] ;
 
 
 
@@ -39,14 +40,29 @@ class Item extends Model
 
     public function inventories()
     {
-        return $this->belongsToMany(Inventory::class, 'inventory_items', 'item_id', 'inventory_id')
-                    ->withPivot('quantity');
+        return $this->belongsToMany(Inventory::class,
+        'inventory_items',
+         'item_id',
+          'inventory_id',
+          'id' , 'id')
+          ->withPivot('quantity')
+          ->orderBy('quantity', 'desc');
     }
 
+
+// public function largest(){
+//     $largeInventory = $this->inventories()->first();
+//     return $largeInventory;
+
+// }
     public function vendors()
     {
-        return $this->belongsToMany(Vendor::class, 'vendor_items', 'item_id', 'vendor_id')
-                    ->withPivot('quantity');
+        return $this->belongsToMany(Vendor::class,
+         'vendor_items',
+          'item_id',
+           'vendor_id',
+           'id' , 'id')
+            ->withPivot('quantity');
     }
 
     public function PurchaseOrders(){

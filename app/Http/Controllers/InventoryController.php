@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Inventory;
+use App\Services\InventoryService;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */

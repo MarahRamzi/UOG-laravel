@@ -16,18 +16,5 @@ class InventoryItem extends Model
         'quantity',
     ];
 
-    public function city(){
-        return $this->belongsTo(City::class , 'city_id' , 'id');
-    }
 
-    public function items()
-    {
-        return $this->belongsToMany(Item::class, 'inventory_items', 'item_id', 'inventory_id')
-                    ->withPivot('quantity');
-    }
-
-    public function purchaseorders()
-    {
-        return $this->hasMany(PurchaseOrder::class , 'inventory_id' , 'id');
-    }
 }

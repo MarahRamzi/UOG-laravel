@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('inventory_id')
             ->constrained()
             ->cascadeOnDelete();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

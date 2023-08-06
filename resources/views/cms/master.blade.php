@@ -63,6 +63,10 @@
       </div>
     </form>
 
+    <div class="mx-5">
+      <p class="text-primary">Authenticated User : {{ Auth::user()->username}}</p>
+  </div>
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->

@@ -24,7 +24,9 @@
             {{ session()->get('success') }}
         </div>
         @endif
+
 <div class="filter mb-5">
+
     <form action="{{ route('items.index') }}" method="GET">
         <select name="is_active" class="mr-3">
             <option value="1">Active</option>
@@ -32,18 +34,29 @@
         </select>
 
         <input type="text" class="mr-3" name="name"id="name" placeholder="name">
-{{--
+
+
+        <select name="inventory_id" class="mr-3">
+            @foreach ($inventories as $inventory )
+            <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
+            @endforeach
+        </select>
+
         <select name="vendor_id" class="mr-3">
-            @foreach ($vendor as $vendors )
+            @foreach ($vendors as $vendor )
             <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
             @endforeach
-        </select> --}}
+        </select>
+
 
         <select name="brand_id" class="mr-3">
             @foreach ($brand as $brands )
             <option value="{{ $brands->id }}">{{ $brands->name }}</option>
             @endforeach
         </select>
+
+        {{-- <input type="text" class="mr-3" name="quantity"id="quantity" placeholder="quantity"> --}}
+
 
 
         <button type="submit">Filter</button>
@@ -64,13 +77,19 @@
             <li class="list-group-item"> Price => {{ $items->price }}</li>
             <li class="list-group-item"> purchasing Allowed => {{ $items->purchasing_allowed}}</li>
             <li class="list-group-item">Brand => {{ $items->brand->name }}</li>
-            <li class="list-group-item btn-holder"><a href="{{ route('add.to.cart', $items->id) }}" class="btn btn-warning">Add to cart</a> </li>
-            <li class="list-group-item"><a href= "{{ route('items.edit' , $items->id) }}" class="btn btn-primary">Edit</a>
+            <li class="list-group-item btn-holder">
+                <a href="{{ route('add.to.cart', $items->id) }}" class="btn btn-warning">Add to cart</a></li>
+                <li class="list-group-item btn-holder">
+                <a href= "{{ route('items.edit' , $items->id) }}" class="btn btn-primary">Edit</a>
               <form action="{{ route('items.destroy' , $items->id) }}" method="post">
                   @csrf()
                   @method('delete')
                   <button type="submit" class="btn btn-danger mt-3">Delete</button>
               </form>
+              <a href= "{{ route('inventory.largest-quantity' , $items->id) }}" class="btn btn-dark btn-sm mt-3">Inventory with Largest Quantity</a>
+              <a href= "{{ route('test_quantity') }}" class="btn btn-dark btn-sm mt-3">Test Quantity</a>
+
+
           </li>
           </ul>
     </div>

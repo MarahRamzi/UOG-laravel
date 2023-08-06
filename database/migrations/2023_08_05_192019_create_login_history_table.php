@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('items', function (Blueprint $table) {
-            $table->float('price')->after('is_active');
+        Schema::create('login_history', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->string('name');
+            $table->timestamp('login_at');
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('items', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('login_history');
     }
 };
