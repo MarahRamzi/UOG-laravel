@@ -11,6 +11,11 @@ class PurchaseOrder extends Model
 
     protected $fillable = ['user_id' , 'item_id' , 'inventory_id' , 'status'];
 
+    protected static  function booted()
+    {
+    }
+
+
     public function user()
     {
         return $this->belongsTo(User::class , 'user_id' , 'id');
@@ -31,6 +36,7 @@ class PurchaseOrder extends Model
         return $this->hasMany(CartItem::class ,'order_id' , 'id');
 
    }
+
 
 
 }

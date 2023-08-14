@@ -44,7 +44,7 @@
 
         <select name="vendor_id" class="mr-3">
             @foreach ($vendors as $vendor )
-            <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+            <option value="{{ $vendor->id }}">{{ $vendor->email }}</option>
             @endforeach
         </select>
 
@@ -87,7 +87,7 @@
                   <button type="submit" class="btn btn-danger mt-3">Delete</button>
               </form>
               <a href= "{{ route('inventory.largest-quantity' , $items->id) }}" class="btn btn-dark btn-sm mt-3">Inventory with Largest Quantity</a>
-              <a href= "{{ route('test_quantity') }}" class="btn btn-dark btn-sm mt-3">Test Quantity</a>
+              {{-- <a href= "{{ route('test_quantity') }}" class="btn btn-dark btn-sm mt-3">Test Quantity</a> --}}
 
 
           </li>

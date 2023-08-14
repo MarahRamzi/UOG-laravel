@@ -4,14 +4,14 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
-use App\Models\Inventory;
-use App\Models\Item;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,3 +65,14 @@ Route::get('/items/{item}/largest-quantity', [ItemController::class, 'Largestqua
     ->name('inventory.largest-quantity');
 
 Route::get('/test-low-quantity', [PurchaseController::class, 'makePurchase'])->name('test_quantity');
+Route::put('/inventory/{inventory}', [InventoryController::class , 'updateInventory'])->name('inventory.update');
+
+
+
+// Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+// Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+Route::get('/forgot-password', [ResetPasswordController::class , 'indexlink'])->middleware('auth')->name('password.request');
+Route::post('/forgot-password', [ResetPasswordController::class , 'sendlink'])->middleware('auth')->name('password.email');
+Route::get('/reset-password/{token}', [ResetPasswordController::class , 'indexreset'])->middleware('auth')->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class , 'resetPassword'])->middleware('auth')->name('password.update');

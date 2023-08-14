@@ -21,10 +21,10 @@ class ItemController extends Controller
     {
         // $item = Item::all();
         $brand = Brand::all();
-        $inventories = $item->inventories()->get();
-        $vendors = $item->vendors()->get();
+        $inventories = Inventory::all();
+        $vendors = Vendor::all();
 
-    //  dd($inventories);
+    //  dd($vendors);
 
         if (!is_null($request->get('name'))) {
             $item = $item->where('name', $request->input('name'));
@@ -275,20 +275,20 @@ class ItemController extends Controller
         return redirect()->route('items.index')->with('success' , 'item deleted');
     }
 
-    public function filterItems()
-{
-    $brandId = request('brand_id');
+//     public function filterItems()
+// {
+//     $brandId = request('brand_id');
 
 
-    $items = Item::byBrandId($brandId)
-    ->byInventoryQuantity()
-    ->get();
+//     $items = Item::byBrandId($brandId)
+//     ->byInventoryQuantity()
+//     ->get();
 
-    $vendors = Vendor::all();
+//     $vendors = Vendor::all();
 
 
-    return view('Item.index', ['items' => $items, 'vendors' => $vendors]);
-}
+//     return view('Item.index', ['items' => $items, 'vendors' => $vendors]);
+// }
 
 public function Largestquantity(Item $item)
 {

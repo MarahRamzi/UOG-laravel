@@ -10,8 +10,7 @@ class Item extends Model
 {
     use HasFactory , SoftDeletes;
 
-    protected $fillable =[ 'name' , 'image' , 'is_active' ,'price', 'purchasing_allowed', 'brand_id' , 'total_purchases' , 'total_sales
-    '] ;
+    protected $fillable =[ 'name' , 'image' , 'is_active' ,'price', 'purchasing_allowed', 'brand_id' , 'total_purchases' , 'total_sales'] ;
 
 
 

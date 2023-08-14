@@ -63,10 +63,6 @@
       </div>
     </form>
 
-    <div class="mx-5">
-      <p class="text-primary">Authenticated User : {{ Auth::user()->username}}</p>
-  </div>
-
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
@@ -184,7 +180,7 @@
           <img src="{{ asset('cms/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block text-primary"> {{ Auth::user()->username}}</a>
         </div>
       </div>
 
@@ -447,7 +443,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('password.request') }}" class="nav-link">
                 <i class="fas fa-lock-open"></i>
               <p>Change password</p>
             </a>

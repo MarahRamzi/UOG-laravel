@@ -70,6 +70,7 @@ class InventoryController extends Controller
         return redirect()->route('inventories.index')->with('success' , 'Inventory updated');
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -78,4 +79,17 @@ class InventoryController extends Controller
         $inventory->delete();
         return redirect()->route('inventories.index')->with('success' , 'inventory deleted');
     }
+
+    public function updateInventory(Request $request, Inventory $inventory)
+    {
+        $newQuantity = $request->input('quantity');
+        $inventory->quantity = $newQuantity;
+        $inventory->save();
+
+        // Update total_purchases
+        $inventory->increment('total_purchases', $newQuantity);
+
+        return redirect()->back()->with('success', 'Inventory updated successfully.');
+    }
+
 }

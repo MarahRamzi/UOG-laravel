@@ -10,15 +10,21 @@ use Illuminate\Support\Facades\Mail;
 
 class PurchaseController extends Controller
 {
-    public function makePurchase(Request $request , PurchaseOrder $purchase)
+    public function makePurchase(Request $request, PurchaseOrder $purchase)
     {
         $items = $purchase->item;
-        dd($purchase->item);
+        // dd($items);
+
         foreach ($items as $item) {
-            foreach ($item->inventories as $inventory) {
-                if ($inventory->pivot->quantity < 50) {
-                    // Send an email to the vendor
-                    Mail::to($item->vendor->email)
+            $totalQuantity = $item->inventories->sum(function ($inventory) {
+                return $inventory->pivot->quantity;
+            });
+
+
+            if ($totalQuantity < 50) {
+                // Send an email to the vendor
+                foreach ($item->vendors as $vendor) {
+                    Mail::to($vendor->email)
                         ->send(new LowQuantityNotification($item));
                 }
             }

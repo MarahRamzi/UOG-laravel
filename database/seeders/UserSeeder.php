@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'last_name' => 'ali' ,
             'is_admin' => 0,
             'is_active' => 1 ,
-            'password' =>Hash::make('passwordmanar'),
+            'password' =>Hash::make('passwordmarwa'),
         ]);
 
         DB::table('users')->insert([
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'last_name' => 'ahmed' ,
             'is_admin' => 0 ,
             'is_active' => 0 ,
-            'password' =>Hash::make('123455'),
+            'password' =>Hash::make('abd12345'),
         ]);
 
         DB::table('users')->insert([
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'last_name' => 'mahmoud' ,
             'is_admin' => 1 ,
             'is_active' => 1 ,
-            'password' =>Hash::make('passwordahmed'),
+            'password' =>Hash::make('ahmed123#@!'),
         ]);
 
     }

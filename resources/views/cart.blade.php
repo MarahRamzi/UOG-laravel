@@ -13,6 +13,7 @@
                 <th>Subtotal</th>
                 <th>Time</th>
                 <th>Action</th>
+                <th>purchase</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,9 @@
                             <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
                         </form>
                         </td>
+                        <td>
+                            <a href="{{ route('test_quantity') }}" class="btn btn-success">Buy</a>
+                        </td>
                     </tr>
                 @endforeach
             @endif
@@ -53,7 +57,6 @@
 
     <div class="text-right">
         <a href="{{ route('items.index') }}" class="btn btn-secondary">Continue Shopping</a>
-        <a href="#" class="btn btn-success">Checkout</a>
     </div>
 </div>
 @endsection

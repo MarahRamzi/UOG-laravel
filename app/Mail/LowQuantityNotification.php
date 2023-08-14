@@ -23,12 +23,12 @@ class LowQuantityNotification extends Mailable
         $this->item = $item;
     }
 
-    public function build()
-    {
-        return $this->view('emails.low_quantity')
-            ->with(['item' => $this->item])
-            ->subject('Low Quantity Alert');
-    }
+    // public function build()
+    // {
+    //     return $this->view('emails.low_quantity')
+    //         ->with(['item' => $this->item])
+    //         ->subject('Low Quantity Alert');
+    // }
 
     /**
      * Get the message envelope.
@@ -38,15 +38,18 @@ class LowQuantityNotification extends Mailable
         return new Envelope(
             subject: 'Low Quantity Notification',
         );
-    }
+    } 
 
     /**
      * Get the message content definition.
      */
     public function content(): Content
     {
+        // return $this->view('emails.low_quantity')
+        // ->with(['item' => $this->item]);
         return new Content(
-            view: 'view.name',
+            view: 'emails.low_quantity',
+            with:['item' => $this->item],
         );
     }
 
