@@ -16,6 +16,11 @@ use Illuminate\Validation\ValidationException as ValidationValidationException;
 class AccessTokensController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum', ['except' => ['store', 'register']]);
+    }
+
     public function register(Request $request)
     {
         $request->validate([

@@ -70,23 +70,8 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-
-        $request->validate([
-            'username' => 'required|string|min:4|unique:users',
-            'email' => 'required |email',
-            'first_name' => 'min:3 | max:15',
-            'last_name' => 'min:3 | max:15',
-            'is_admin' => 'required|in:0,1',
-            'is_active' => 'required|in:0,1',
-            'password' => [
-                'required',
-                'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
-            ],
-        ]);
-
 
         $user = User::create($request->all()); //create=>new user() +save()
 
@@ -106,7 +91,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(UserRequest $request, $id): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
 
         $request->validate([

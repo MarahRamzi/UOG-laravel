@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
-class User extends Authenticatable 
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable ,SoftDeletes;
 
@@ -42,6 +42,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'first_name',
+        'last_name',
+    ];
+
+    protected $appends = [
+        'full_name',
     ];
 
     /**
@@ -53,6 +62,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getFullNameAttribute()
+{
+    	return ("{$this->first_name} {$this->last_name}");
+}
 
     public function sendPasswordResetNotification($token): void
     {
