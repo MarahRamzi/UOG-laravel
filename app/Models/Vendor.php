@@ -33,4 +33,10 @@ class Vendor extends Model
              ->withPivot('quantity');
         }
 
+
+    public function addresses()
+    {
+        return $this->morphOne(Address::class , 'addressable' , 'addressable_id' , 'addressable_type' ,'id');
+    }
+
 }

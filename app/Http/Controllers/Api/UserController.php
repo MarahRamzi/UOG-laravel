@@ -16,12 +16,14 @@ class UserController extends Controller
     public function index()
     {
         //   return response()->json( User::paginate(2), 200);
-        $user = User::all();
+         $user = User::with('address')->get();
         $Mainuser = [];
         $i = 0;
         foreach ($user as $users) {
+            // dd($user);
+            $Mainuser[$i]['id'] = $users->id;
             $Mainuser[$i]['full_name'] = $users->full_name;
-            // Mainuser[$i]['addresses']=$user->getAddresses();
+            $Mainuser[$i]['address'] = $user->address;
             $i++;
         }
 
@@ -31,10 +33,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+    public function store(UserRequest $request , User $user)
     {
 
         $user = User::create($request->all());
+
+
+        $user->address()->create($request->all());
 
         return response()->json($user, 201); //201=> ok and created
     }
@@ -62,6 +67,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->update($request->all());
+
+        $user->address->update($request->all());
 
         return  response()->json([
             'message' => 'user updated',
